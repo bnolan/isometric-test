@@ -1,0 +1,27 @@
+{
+  "name": "mv-thin-client",
+  "version": "0.0.0",
+  "authors": [
+    "bnolan@gmail.com"
+  ],
+  "main": "client.coffee",
+  "license": "MIT",
+  "private": true,
+  "dependencies" : {
+    "obelisk.js" : "*",
+    "requirejs" : "*",
+    "jquery" : "2.1.0",
+    "stats.js" : "*"
+  },
+  "devDependencies": {
+    "jasmine": "*"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/components",
+    "test",
+    "tests"
+  ]
+}
