@@ -31,14 +31,23 @@ require [
 
       @nodes = []
 
-      for i in [0..50]
+      # create cube dimension and color instance
+      dimension = new obelisk.CubeDimension(20, 20, 20)
+      color = new obelisk.CubeColor().getByHorizontalColor(obelisk.ColorPattern.PURPLE)
+
+      for i in [0..100]
         @nodes.push {
           x : Math.random()
           y : Math.random()
           t : Math.random() * 0xFFFF
+          cube : new obelisk.Cube(dimension, color, true)
         }
 
-      setInterval @tick, 1000/60
+      color = new obelisk.SideColor(0x66666677, 0x66666677)
+      dimension = new obelisk.CubeDimension(20, 40, 0)
+      @shadow = new obelisk.Brick(dimension, color)
+
+      @tick()
 
     renderGrid: ->
       # render the grid
@@ -63,26 +72,18 @@ require [
       for node in @nodes
         t = (node.t + new Date().getTime()) / 1000.0
 
-        x = Math.sin(t * node.x) * @width
-        y = Math.sin(t * node.y) * @height
+        x = Math.sin(t * node.x) * @width / 4 + 400
+        y = Math.sin(t * node.y) * @height / 4
 
         # Location
         point = new obelisk.Point3D(x, y, 0)
 
         # Draw the shadow
-        color = new obelisk.SideColor(0x66666677, 0x66666677)
-        dimension = new obelisk.CubeDimension(20, 40, 0)
-        brick = new obelisk.Brick(dimension, color)
-        @pixelView.renderObject(brick, point)
-
-        # create cube dimension and color instance
-        dimension = new obelisk.CubeDimension(20, 20, 20)
-        color = new obelisk.CubeColor().getByHorizontalColor(obelisk.ColorPattern.PURPLE)
-
-        # build cube with dimension and color instance
-        cube = new obelisk.Cube(dimension, color, true)
+        @pixelView.renderObject(@shadow, point)
 
         # render cube primitive into view
-        @pixelView.renderObject(cube, point)
+        @pixelView.renderObject(node.cube, point)
 
       @stats.end()
+
+      requestAnimationFrame @tick

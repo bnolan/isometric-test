@@ -12,7 +12,7 @@
       function Renderer() {
         this.tick = __bind(this.tick, this);
 
-        var i, point, _i;
+        var color, dimension, i, point, _i;
         this.width = $(window).width();
         this.height = $(window).height();
         this.stats = new Stats();
@@ -26,14 +26,20 @@
         point = new obelisk.Point(200, 200);
         this.pixelView = new obelisk.PixelView(this.canvas, point);
         this.nodes = [];
-        for (i = _i = 0; _i <= 50; i = ++_i) {
+        dimension = new obelisk.CubeDimension(20, 20, 20);
+        color = new obelisk.CubeColor().getByHorizontalColor(obelisk.ColorPattern.PURPLE);
+        for (i = _i = 0; _i <= 100; i = ++_i) {
           this.nodes.push({
             x: Math.random(),
             y: Math.random(),
-            t: Math.random() * 0xFFFF
+            t: Math.random() * 0xFFFF,
+            cube: new obelisk.Cube(dimension, color, true)
           });
         }
-        setInterval(this.tick, 1000 / 60);
+        color = new obelisk.SideColor(0x66666677, 0x66666677);
+        dimension = new obelisk.CubeDimension(20, 40, 0);
+        this.shadow = new obelisk.Brick(dimension, color);
+        this.tick();
       }
 
       Renderer.prototype.renderGrid = function() {
@@ -60,26 +66,21 @@
       };
 
       Renderer.prototype.tick = function() {
-        var brick, color, cube, dimension, node, point, t, x, y, _i, _len, _ref;
+        var node, point, t, x, y, _i, _len, _ref;
         this.stats.begin();
         this.ctx.clearRect(0, 0, this.width, this.height);
         _ref = this.nodes;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           node = _ref[_i];
           t = (node.t + new Date().getTime()) / 1000.0;
-          x = Math.sin(t * node.x) * this.width;
-          y = Math.sin(t * node.y) * this.height;
+          x = Math.sin(t * node.x) * this.width / 4 + 400;
+          y = Math.sin(t * node.y) * this.height / 4;
           point = new obelisk.Point3D(x, y, 0);
-          color = new obelisk.SideColor(0x66666677, 0x66666677);
-          dimension = new obelisk.CubeDimension(20, 40, 0);
-          brick = new obelisk.Brick(dimension, color);
-          this.pixelView.renderObject(brick, point);
-          dimension = new obelisk.CubeDimension(20, 20, 20);
-          color = new obelisk.CubeColor().getByHorizontalColor(obelisk.ColorPattern.PURPLE);
-          cube = new obelisk.Cube(dimension, color, true);
-          this.pixelView.renderObject(cube, point);
+          this.pixelView.renderObject(this.shadow, point);
+          this.pixelView.renderObject(node.cube, point);
         }
-        return this.stats.end();
+        this.stats.end();
+        return requestAnimationFrame(this.tick);
       };
 
       return Renderer;
