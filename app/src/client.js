@@ -2,17 +2,20 @@
 (function() {
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
-  require(["/app/components/jquery/dist/jquery.js", "/app/components/obelisk.js/build/obelisk.js", "/app/components/stats.js/build/stats.min.js"], function(_jquery, _obelisk, _stats) {
+  require.config({
+    urlArgs: "nonce=" + (new Date()).getTime()
+  });
+
+  require(["/app/src/scene.js", "/app/src/connector.js", "/app/components/jquery/dist/jquery.js", "/app/components/obelisk.js/build/obelisk.js", "/app/components/stats.js/build/stats.min.js"], function(Scene, Connector, _jquery, _obelisk, _stats) {
     var Renderer;
-    $(function() {
-      return new Renderer;
-    });
-    return Renderer = (function() {
+    Renderer = (function() {
 
       function Renderer() {
         this.tick = __bind(this.tick, this);
 
         var color, dimension, i, point, _i;
+        this.scene = new Scene;
+        this.connector = new Connector(this.scene);
         this.width = $(window).width();
         this.height = $(window).height();
         this.stats = new Stats();
@@ -28,7 +31,7 @@
         this.nodes = [];
         dimension = new obelisk.CubeDimension(20, 20, 20);
         color = new obelisk.CubeColor().getByHorizontalColor(obelisk.ColorPattern.PURPLE);
-        for (i = _i = 0; _i <= 100; i = ++_i) {
+        for (i = _i = 0; _i <= 10; i = ++_i) {
           this.nodes.push({
             x: Math.random(),
             y: Math.random(),
@@ -86,6 +89,9 @@
       return Renderer;
 
     })();
+    return $(function() {
+      return new Renderer;
+    });
   });
 
 }).call(this);

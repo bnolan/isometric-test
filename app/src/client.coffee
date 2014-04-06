@@ -1,12 +1,19 @@
+require.config {
+    urlArgs : "nonce=" + (new Date()).getTime()
+}
+
 require [
+  "/app/src/scene.js",
+  "/app/src/connector.js",
   "/app/components/jquery/dist/jquery.js", 
   "/app/components/obelisk.js/build/obelisk.js", 
   "/app/components/stats.js/build/stats.min.js"
-], (_jquery, _obelisk, _stats) ->
-  $ -> new Renderer
-
+], (Scene, Connector, _jquery, _obelisk, _stats) ->
   class Renderer
     constructor: ->
+      @scene = new Scene
+      @connector = new Connector(@scene)
+      
       @width = $(window).width()
       @height = $(window).height()
 
@@ -35,7 +42,7 @@ require [
       dimension = new obelisk.CubeDimension(20, 20, 20)
       color = new obelisk.CubeColor().getByHorizontalColor(obelisk.ColorPattern.PURPLE)
 
-      for i in [0..100]
+      for i in [0..10]
         @nodes.push {
           x : Math.random()
           y : Math.random()
@@ -87,3 +94,5 @@ require [
       @stats.end()
 
       requestAnimationFrame @tick
+
+  $ -> new Renderer
