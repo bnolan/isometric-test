@@ -26,16 +26,17 @@
       }
 
       Connector.prototype.onMessage = function(e) {
-        var klass, message, messages, packet, packetId, _i, _len;
+        var klass, message, messages, packet, packetId, _i, _len, _results;
         messages = msgpack.decode(e.data);
+        _results = [];
         for (_i = 0, _len = messages.length; _i < _len; _i++) {
           message = messages[_i];
           packetId = message[0];
           klass = Packets.dictionary[packetId];
           packet = new klass(message);
-          packet.process(this.scene);
+          _results.push(packet.process(this.scene));
         }
-        return console.log(this.scene.elements);
+        return _results;
       };
 
       return Connector;

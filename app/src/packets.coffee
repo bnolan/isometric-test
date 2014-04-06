@@ -1,8 +1,9 @@
 define [
   '/app/components/threejs/build/three.js', 
+  '/app/components/tweenjs/build/tween.min.js', 
   '/app/src/utils.js',
   '/app/src/elements/box.js'
-], (THREE_, utils, Box) ->
+], (THREE_, TWEEN_, utils, Box) ->
 	class PacketIntroducing
 	  @id: 0x01
 
@@ -48,7 +49,15 @@ define [
       if !element
         debug "Trying to update non-present element #{@id}"
 
-      element.position = new THREE.Vector3 @positionX, @positionY, @positionZ
+      tween = new TWEEN.Tween( { x : element.position.x, y : element.position.y, z : element.position.z } )
+
+      tween.to( { x : @positionX, y : @positionY, z : @positionZ }, 500).
+        easing(TWEEN.Easing.Linear.None).
+        onUpdate( -> element.position = new THREE.Vector3(@x, @y, @z)).
+        start()
+      
+      #element.position = new THREE.Vector3 @positionX, @positionY, @positionZ
+      
       element.rotation = new THREE.Euler @_byteToEuler(@rotationX, @rotationY, @rotationZ)
 
       # Do something...

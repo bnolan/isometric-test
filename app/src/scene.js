@@ -6,19 +6,19 @@
     Scene = (function() {
 
       function Scene() {
-        this.elements = {};
+        this.childNodes = {};
       }
 
       Scene.prototype.getElementById = function(id) {
-        return this.elements[id];
+        return this.childNodes[id];
       };
 
       Scene.prototype.appendChild = function(element) {
-        return this.elements[element.id] = element;
+        return this.childNodes[element.id] = element;
       };
 
       Scene.prototype.removeChild = function(element) {
-        return this.elements[element.id] = null;
+        return this.childNodes[element.id] = null;
       };
 
       return Scene;

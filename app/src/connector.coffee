@@ -29,7 +29,5 @@ define [
 
         packet = new klass(message)
         packet.process(@scene)
-
-      console.log @scene.elements
     
   Connector

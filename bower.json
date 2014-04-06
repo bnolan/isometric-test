@@ -13,7 +13,8 @@
     "jquery" : "2.1.0",
     "stats.js" : "*",
     "msgpack-js-browser" : "https://github.com/creationix/msgpack-js-browser.git",
-    "threejs" : "*"
+    "threejs" : "*",
+    "tweenjs" : "*"
   },
   "devDependencies": {
     "jasmine": "*"

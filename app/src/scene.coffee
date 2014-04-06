@@ -1,15 +1,15 @@
 define [], () ->
   class Scene
     constructor: ->
-      @elements = {}
+      @childNodes = {}
     
     getElementById: (id) ->
-      @elements[id]
+      @childNodes[id]
     
     appendChild: (element) ->
-      @elements[element.id] = element
+      @childNodes[element.id] = element
     
     removeChild: (element) ->
-      @elements[element.id] = null
+      @childNodes[element.id] = null
     
   Scene
