@@ -6,7 +6,7 @@
     urlArgs: "nonce=" + (new Date()).getTime()
   });
 
-  require(["/app/src/scene.js", "/app/src/connector.js", "/app/components/jquery/dist/jquery.js", "/app/components/obelisk.js/build/obelisk.js", "/app/components/stats.js/build/stats.min.js"], function(Scene, Connector, _jquery, _obelisk, _stats) {
+  require(["/app/src/scene.js", "/app/src/connector.js", "/app/src/uploader.js", "/app/components/jquery/dist/jquery.js", "/app/components/obelisk.js/build/obelisk.js", "/app/components/stats.js/build/stats.min.js"], function(Scene, Connector, Uploader, _jquery, _obelisk, _stats) {
     var Renderer;
     Renderer = (function() {
 

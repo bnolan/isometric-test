@@ -11,6 +11,8 @@ define [
       [nil, @xml] = array
 
     process: (scene) ->
+      console.log @xml
+
       element = scene.getElementById(@id)
 
       if element
@@ -47,7 +49,8 @@ define [
       element = scene.getElementById(@id)
 
       if !element
-        debug "Trying to update non-present element #{@id}"
+        # console.log "Trying to update non-present element #{@id}"
+        return
 
       tween = new TWEEN.Tween( { x : element.position.x, y : element.position.y, z : element.position.z } )
 

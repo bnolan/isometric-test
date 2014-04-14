@@ -14,6 +14,7 @@
 
       PacketIntroducing.prototype.process = function(scene) {
         var dom, element;
+        console.log(this.xml);
         element = scene.getElementById(this.id);
         if (element) {
           scene.removeChild(element);
@@ -55,7 +56,7 @@
         var element, tween;
         element = scene.getElementById(this.id);
         if (!element) {
-          debug("Trying to update non-present element " + this.id);
+          return;
         }
         tween = new TWEEN.Tween({
           x: element.position.x,

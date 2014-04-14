@@ -14,7 +14,8 @@
     "stats.js" : "*",
     "msgpack-js-browser" : "https://github.com/creationix/msgpack-js-browser.git",
     "threejs" : "*",
-    "tweenjs" : "*"
+    "tweenjs" : "*",
+    "jquery-file-upload" : "*"
   },
   "devDependencies": {
     "jasmine": "*"

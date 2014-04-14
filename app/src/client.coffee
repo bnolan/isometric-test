@@ -5,15 +5,17 @@ require.config {
 require [
   "/app/src/scene.js",
   "/app/src/connector.js",
+  "/app/src/uploader.js",
   "/app/components/jquery/dist/jquery.js", 
   "/app/components/obelisk.js/build/obelisk.js", 
   "/app/components/stats.js/build/stats.min.js"
-], (Scene, Connector, _jquery, _obelisk, _stats) ->
+], (Scene, Connector, Uploader, _jquery, _obelisk, _stats) ->
   class Renderer
     constructor: ->
       @scene = new Scene
       @connector = new Connector(@scene)
-      
+      # @uploader = new Uploader
+
       @width = $(window).width()
       @height = $(window).height()
 
